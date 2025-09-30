@@ -9,11 +9,11 @@ import com.project.UtilsViews;
 
 
 public class Main extends Application{
-    private static final int WINDOW_WIDTH = 350;
-    private static final int WINDOW_HEIGHT = 400;
+    private static final int WINDOW_WIDTH = 450;
+    private static final int WINDOW_HEIGHT = 200;
     static String nom = "";
     static String edat = "";
-    static String texto = "";
+
     private static Stage primaryStage; 
 
 

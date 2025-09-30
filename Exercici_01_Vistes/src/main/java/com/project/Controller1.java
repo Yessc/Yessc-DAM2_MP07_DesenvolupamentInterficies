@@ -15,17 +15,16 @@ public class Controller1 {
     private TextField edatField;
 
     @FXML
-    private Button segueixButton;
+    private Button btnSeguent;
 
     @FXML
     public void initialize() {
-        segueixButton.setDisable(true);
-
+        btnSeguent.setDisable(true);
         nomField.textProperty().addListener((obs, oldVal, newVal) -> validar());
         edatField.textProperty().addListener((obs, oldVal, newVal) -> validar());
     }
     private void validar() {
-        segueixButton.setDisable(nomField.getText().isEmpty() || edatField.getText().isEmpty());
+        btnSeguent.setDisable(nomField.getText().isEmpty() || edatField.getText().isEmpty());
     }
 
     @FXML
