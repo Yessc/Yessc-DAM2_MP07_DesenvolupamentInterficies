@@ -8,9 +8,9 @@
             editable="false" 
             prefHeight="80" 
             style="-fx-font-size: 32px;
-            -fx-background-color: black;
+            -fx-background-color: grey;
             -fx-alignment: center-right;  
-            -fx-border-color: white; 
+            -fx-border-color: black; 
             -fx-border-width: 2;" />
     
     <GridPane hgap="10" vgap="10">

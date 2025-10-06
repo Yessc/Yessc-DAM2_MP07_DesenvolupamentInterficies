@@ -3,6 +3,10 @@ package com.project;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import com.project.Calculadora;
+import javafx.event.ActionEvent;
+ 
+
 
 public class Controller {
 
@@ -11,34 +15,65 @@ public class Controller {
 
     private double firstNumber = 0;
     private String operator = "";
+    private boolean nuevaOperation = true;
+    private Calculadora calculadora  = new Calculadora();
+    
 
-    @FXML
-    private void handleNumber(javafx.event.ActionEvent event) {
+
+     @FXML
+    private void handleNumber(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
-        display.appendText(value);
+        if(nuevaOperation){
+            display.setText(value);
+            nuevaOperation = false;
+        }else{
+            display.appendText(value);
+        }
+
     }
 
     @FXML
-    private void handleOperator(javafx.event.ActionEvent event) {
-        String value = ((Button)event.getSource()).getText();
-        firstNumber = Double.parseDouble(display.getText());
-        operator = value;
-        display.clear();
-    }
+    private void handleOperator(ActionEvent event) {
+        String newOperator = ((Button)event.getSource()).getText();
+        double actualNumber = Double.parseDouble(display.getText());
 
+        if (!operator.isEmpty()) {//compruebo si el operador no esta vacio
+            calculadora.setNum1(firstNumber);
+            calculadora.setNum2(actualNumber);
+            calculadora.setOperation(operator);
+        try{
+            firstNumber = calculadora.calcular();
+            display.setText(String.valueOf(firstNumber));
+            
+        }catch(ArithmeticException e){
+            display.setText("Error");
+            nuevaOperation = true;
+            operator = "";
+        }
+        }else{
+            firstNumber = actualNumber;
+        }
+        operator = newOperator;
+        nuevaOperation = true;
+    }
     @FXML
     private void handleEquals() {
         double secondNumber = Double.parseDouble(display.getText());
-        double result = 0;
 
-        switch(operator) {
-            case "+": result = firstNumber + secondNumber; break;
-            case "-": result = firstNumber - secondNumber; break;
-            case "*": result = firstNumber * secondNumber; break;
-            case "/": result = firstNumber / secondNumber; break;
+        calculadora.setNum1(firstNumber);
+        calculadora.setNum2(secondNumber);
+        calculadora.setOperation(operator);
+        try{
+            double result = calculadora.calcular();
+            display.setText(String.valueOf(result));
+            operator = "";
+            nuevaOperation = true;
+        }catch(ArithmeticException e){
+            display.setText("Error");
+            nuevaOperation = true;
+            operator = "";
         }
 
-        display.setText(String.valueOf(result));
     }
 
     @FXML
@@ -46,5 +81,7 @@ public class Controller {
         display.clear();
         firstNumber = 0;
         operator = "";
+        nuevaOperation = true;
     }
+
 }
